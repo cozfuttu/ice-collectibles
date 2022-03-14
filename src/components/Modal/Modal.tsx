@@ -38,7 +38,6 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ show, closeFunc }) => {
-  console.log(show)
   if (!show) return null
   return (
     <ModalDiv onClick={() => closeFunc()}>

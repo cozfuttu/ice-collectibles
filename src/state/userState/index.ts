@@ -3,7 +3,7 @@ import { UserState } from "state/types";
 import fetchUserNftsData from "./fetchUserNftsData";
 import fetchUserPartsData from "./fetchUserPartsData";
 
-const initialState: UserState = { nfts: [], parts: [] }
+const initialState: UserState = { nfts: [], parts: [], ownedNftCount: 0 }
 
 const userSlice = createSlice({
   name: 'user',
@@ -11,12 +11,12 @@ const userSlice = createSlice({
   reducers: {
     setUserNftsData(state, action) {
       const newNftData = action.payload
-      return {...state, nfts: newNftData}
+      state.nfts = newNftData
     },
     setUserPartsData(state, action) {
-      const newPartData = action.payload
-      console.log('payloadd: ', action.payload)
-      return {...state, parts: newPartData}
+      const { partsData, ownedNftCount } = action.payload
+      state.parts = partsData
+      state.ownedNftCount = ownedNftCount
     }
   }
 })
@@ -31,7 +31,6 @@ export const fetchUserNftsDataAsync = (account: string) => async (dispatch) => {
 
 export const fetchUserPartsDataAsync = (account: string) => async (dispatch) => {
   const partsData = await fetchUserPartsData(account)
-  console.log('partsData: ', partsData)
   dispatch(setUserPartsData(partsData))
 }
 

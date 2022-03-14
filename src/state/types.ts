@@ -36,6 +36,7 @@ export interface UiState {
 export interface UserState {
   nfts: NftState[]
   parts: PartState[]
+  ownedNftCount: number
 }
 
 export interface State {

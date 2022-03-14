@@ -1,13 +1,11 @@
 import BigNumber from "bignumber.js"
-import { NftData, NftState } from "state/types"
-import { getMintingContractAddress, getPartsContractAddress } from "utils/addressHelpers"
+import { NftData } from "state/types"
+import { getMintingContractAddress } from "utils/addressHelpers"
 import multicall from "utils/multicall"
 import mintingAbi from 'config/abi/CompleteNfts.json'
-import { compoundNft } from "utils/callHelpers"
 
 const fetchUserNftsData = async (account: string) => {
   const mintingContractAddress = getMintingContractAddress()
-  const partsContractAddress = getPartsContractAddress()
 
   const userCall = [
     {
@@ -50,7 +48,7 @@ const fetchUserNftsData = async (account: string) => {
                 return {
                   tokenId: new BigNumber(partDataResponse.tokenId).toNumber(),
                   typeId: new BigNumber(partDataResponse.typeId).toNumber(),
-                  modalId: new BigNumber(partDataResponse.modalId).toNumber(),
+                  modelId: new BigNumber(partDataResponse.modelId).toNumber(),
                   owner: partDataResponse.owner
                 }
               })

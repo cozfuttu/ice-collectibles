@@ -1,11 +1,8 @@
 import { WalletContext } from "context/WalletContext"
 import { useContext, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getPartsContractAddress } from "utils/addressHelpers"
-import multicall from "utils/multicall"
 import { State } from "./types"
-import { fetchUserNftsDataAsync, fetchUserPartsDataAsync } from "./userState"
-import partsAbi from 'config/abi/NftParts.json'
+import { fetchUserPartsDataAsync } from "./userState"
 
 export const useFetchAllData = () => {
   const { account } = useContext(WalletContext)
@@ -16,17 +13,22 @@ export const useFetchAllData = () => {
       // dispatch(fetchUserNftsDataAsync(account))
       dispatch(fetchUserPartsDataAsync(account))
     }
-  }, [account])
+  }, [account, dispatch])
 }
 
-/* export const useNfts = () => {
+export const useNfts = () => {
   const nfts = useSelector((state: State) => state.userState.nfts)
   return nfts
-} */
+}
 
 export const useParts = () => {
-  const parts = useSelector((state: State) => state?.userState?.parts)
+  const parts = useSelector((state: State) => state.userState.parts)
   return parts
+}
+
+export const useUser = () => {
+  const userData = useSelector((state: State) => state.userState)
+  return userData
 }
 
 export const useNotification = () => {

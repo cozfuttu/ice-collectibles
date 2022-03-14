@@ -2,13 +2,13 @@ import BigNumber from "bignumber.js";
 import { Contract } from 'web3-eth-contract'
 import { ethers } from 'ethers'
 
-export const approve = async (mainContract: Contract, spenderContract: Contract, account) => {
+export const approve = async (mainContract, spenderContract, account: string) => {
   return mainContract.methods
     .approve(spenderContract.options.address, ethers.constants.MaxUint256)
     .send({ from: account, gasPrice: '32000000000' })
 }
 
-export const compoundNft = async (mintingContract: Contract, nftParts: number[], account: string) => {
+export const compoundNft = async (mintingContract, nftParts: number[], account: string) => {
   return mintingContract.methods
     .compoundNft(nftParts)
     .send({ from: account, gasPrice: '32000000000' })
@@ -17,7 +17,7 @@ export const compoundNft = async (mintingContract: Contract, nftParts: number[],
     })
 }
 
-export const returnOwnedNftParts = async (partsContract, account) => {
+export const returnOwnedNftParts = async (partsContract, account: string) => {
   return partsContract.methods
     .returnOwnedNftParts(account)
     .call((err, res) => {

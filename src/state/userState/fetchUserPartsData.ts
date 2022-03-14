@@ -1,15 +1,9 @@
-import BigNumber from "bignumber.js"
-import { PartData, PartState } from "state/types"
 import { getPartsContractAddress } from "utils/addressHelpers"
 import multicall from "utils/multicall"
 import partsAbi from "config/abi/NftParts.json"
-import mintingAbi from 'config/abi/CompleteNfts.json'
 
 const fetchUserPartsData = async (account: string) => {
   const partsContractAddress = getPartsContractAddress()
-
-  console.log('partsAdd: ', partsContractAddress)
-  console.log('akjnds: ', account)
 
   const userCall = [
     {
@@ -25,9 +19,6 @@ const fetchUserPartsData = async (account: string) => {
   ]
 
   const [userInfo1, userInfo2] = await multicall(partsAbi, userCall)
-
-  console.log('user owned nft count: ', userInfo1)
-  console.log('user owned nft parts: ', userInfo2)
 
   const { ownedNftCount } = userInfo1
   const ownedNftPartIds = userInfo2[0]
@@ -56,7 +47,7 @@ const fetchUserPartsData = async (account: string) => {
       }
     })
   )
-  return partsData
+  return {partsData, ownedNftCount: parseInt(ownedNftCount._hex)}
 }
 
 export default fetchUserPartsData

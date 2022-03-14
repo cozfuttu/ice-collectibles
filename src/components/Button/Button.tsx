@@ -9,6 +9,7 @@ const StyledButton = styled.button<{ disabled?: boolean }>`
   font-weight: bold;
   border-radius: 8px;
   transition: all 100ms linear;
+  user-select: none;
 `
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

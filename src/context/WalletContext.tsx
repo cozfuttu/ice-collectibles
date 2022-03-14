@@ -27,7 +27,6 @@ const WalletContextProvider: React.FC = ({ children }) => {
 
     try {
       const network = await ethereum.request({ method: 'net_version' })
-      console.log('network: ', network)
       if (parseInt(network) !== CHAIN_ID) {
         alert("You need to change your network to Polygon.")
         return
