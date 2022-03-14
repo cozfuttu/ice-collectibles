@@ -14,7 +14,7 @@ export const useFetchAllData = () => {
   useEffect(() => {
     if (account) {
       // dispatch(fetchUserNftsDataAsync(account))
-      dispatch(fetchUserPartsDataAsync(account))
+      // dispatch(fetchUserPartsDataAsync(account))
     }
   }, [account])
 }

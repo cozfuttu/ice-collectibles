@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux"
 
 const useCompoundNft = (nftParts: number[]) => {
   const dispatch = useDispatch()
-  const account = useContext(WalletContext)
+  const { account } = useContext(WalletContext)
 }
 
 export default useCompoundNft

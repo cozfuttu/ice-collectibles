@@ -6,7 +6,7 @@ const contracts = {
     80001: ''
   },
   partsContract: {
-    137: '0x15aaaD71F8417A400D34857728bB2437C5e52210',
+    137: '0x1d0982746F734Eb71d9c576c990fB19F473D53e1',
     80001: ''
   },
   nativeToken: {
