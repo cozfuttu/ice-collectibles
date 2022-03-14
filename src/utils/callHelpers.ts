@@ -17,9 +17,9 @@ export const compoundNft = async (mintingContract: Contract, nftParts: number[],
     })
 }
 
-export const returnOwnedNftParts = async (partsContract, account: string = '0x2557f50BD8b2c9F82EA331eDf0E8db30F83f6E57') => {
+export const returnOwnedNftParts = async (partsContract, account) => {
   return partsContract.methods
-    .returnOwnedNftParts('0x2557f50BD8b2c9F82EA331eDf0E8db30F83f6E57')
+    .returnOwnedNftParts(account)
     .call((err, res) => {
       if (err) {
         console.log('error occured: ', err)

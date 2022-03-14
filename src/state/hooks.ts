@@ -14,22 +14,22 @@ export const useFetchAllData = () => {
   useEffect(() => {
     if (account) {
       // dispatch(fetchUserNftsDataAsync(account))
-      // dispatch(fetchUserPartsDataAsync(account))
+      dispatch(fetchUserPartsDataAsync(account))
     }
   }, [account])
 }
 
-export const useNfts = () => {
-  const nfts = useSelector((state: State) => state.user.nfts)
+/* export const useNfts = () => {
+  const nfts = useSelector((state: State) => state.userState.nfts)
   return nfts
-}
+} */
 
 export const useParts = () => {
-  const parts = useSelector((state: State) => state.user.parts)
+  const parts = useSelector((state: State) => state?.userState?.parts)
   return parts
 }
 
 export const useNotification = () => {
-  const notifications = useSelector((state: State) => state.ui.notification)
+  const notifications = useSelector((state: State) => state.uiState.notification)
   return notifications
 }

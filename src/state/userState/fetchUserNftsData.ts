@@ -3,6 +3,7 @@ import { NftData, NftState } from "state/types"
 import { getMintingContractAddress, getPartsContractAddress } from "utils/addressHelpers"
 import multicall from "utils/multicall"
 import mintingAbi from 'config/abi/CompleteNfts.json'
+import { compoundNft } from "utils/callHelpers"
 
 const fetchUserNftsData = async (account: string) => {
   const mintingContractAddress = getMintingContractAddress()

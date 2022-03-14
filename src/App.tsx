@@ -1,6 +1,6 @@
 import useReturnOwnedNftParts from 'hooks/useReturnOwnedNftParts';
 import React, { useContext, useEffect, useState } from 'react';
-import { useFetchAllData } from 'state/hooks';
+import { useFetchAllData, useParts } from 'state/hooks';
 import styled from 'styled-components';
 import { Button } from './components';
 import { ConnectWalletButton } from './components/ConnectWalletButton';
@@ -27,7 +27,7 @@ function App() {
   const [showModal, setShowModal] = useState(false)
   const [chosenParts, setChosenParts] = useState([]) // Burası token id'leri tutucak, modal id'leri değil.
   const { connect } = useContext(WalletContext)
-  const { onReturn } = useReturnOwnedNftParts()
+  const val = useParts()
 
   useEffect(() => {
     connect()
@@ -35,9 +35,9 @@ function App() {
 
   useFetchAllData()
 
-  /*  const handleMintNft = async () => {
-  
-    } */
+  const handleMintNft = async () => {
+    console.log('yeee', val)
+  }
 
   return (
     <Page>
@@ -45,7 +45,7 @@ function App() {
         <ConnectWalletButton />
       </ConnectButtonContainer>
       <Modal show={showModal} closeFunc={() => setShowModal(false)} />
-      <Button onClick={onReturn} >Toggle Modal</Button>
+      <Button onClick={handleMintNft} >Toggle Modal</Button>
       {/* <Button onClick={async () => {await mintNft()}}>CREATE</Button> */}
     </Page>
   );

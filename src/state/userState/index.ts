@@ -11,11 +11,12 @@ const userSlice = createSlice({
   reducers: {
     setUserNftsData(state, action) {
       const newNftData = action.payload
-      state.nfts = newNftData
+      return {...state, nfts: newNftData}
     },
     setUserPartsData(state, action) {
       const newPartData = action.payload
-      state.parts = newPartData
+      console.log('payloadd: ', action.payload)
+      return {...state, parts: newPartData}
     }
   }
 })
@@ -30,6 +31,7 @@ export const fetchUserNftsDataAsync = (account: string) => async (dispatch) => {
 
 export const fetchUserPartsDataAsync = (account: string) => async (dispatch) => {
   const partsData = await fetchUserPartsData(account)
+  console.log('partsData: ', partsData)
   dispatch(setUserPartsData(partsData))
 }
 

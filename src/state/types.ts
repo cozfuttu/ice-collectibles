@@ -39,6 +39,6 @@ export interface UserState {
 }
 
 export interface State {
-  user: UserState
-  ui: UiState
+  userState: UserState
+  uiState: UiState
 }

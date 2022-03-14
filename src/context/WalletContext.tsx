@@ -3,21 +3,21 @@ import { useCallback } from "react"
 import { createContext, useEffect, useState } from "react"
 
 interface WalletState {
-  account: string | undefined
+  account: string
   chainId: number | null
   disconnect: () => void
   connect: () => Promise<void>
 }
 
 export const WalletContext = createContext({
-  account: undefined,
+  account: '',
   chainId: null,
 } as WalletState)
 
 
 const WalletContextProvider: React.FC = ({ children }) => {
   const { ethereum } = window
-  const [account, setAccount] = useState(undefined)
+  const [account, setAccount] = useState('')
   const [networkId, setNetworkId] = useState(null)
 
   const connectHandler = useCallback(async () => {
@@ -42,7 +42,7 @@ const WalletContextProvider: React.FC = ({ children }) => {
   }, [ethereum])
 
   const disconnectHandler = () => {
-    setAccount(undefined)
+    setAccount('')
   }
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const WalletContextProvider: React.FC = ({ children }) => {
     ethereum.on('chainChanged', (chainId) => {
       if (parseInt(chainId) === CHAIN_ID) connectHandler()
       else {
-        setAccount(undefined)
+        setAccount('')
         setNetworkId(null)
         window.alert("You need to change your network to Polygon. Disconnecting...")
       }
