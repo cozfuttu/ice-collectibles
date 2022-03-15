@@ -94,7 +94,7 @@ const Inventory: React.FC<InventoryProps> = ({
             <InventoryTab
               key={index}
               src={
-                require(`ArtEngine/layers/${layer}/${index - 100}.png`).default
+                require(`layers/${layer}/${index - 100}.png`).default
               }
               onClick={() => handleTabChange(index)}
             />
@@ -120,12 +120,12 @@ const Inventory: React.FC<InventoryProps> = ({
           else if (part.modelId < 900) layer = "background";
           console.log(
             "imguri: ",
-            `ArtEngine/layers/${layer}/${part.modelId}.png`
+            `layers/${layer}/${part.modelId}.png`
           );
           return (
             <ItemBox
               src={
-                require(`ArtEngine/layers/${layer}/${part.modelId}.png`).default
+                require(`layers/${layer}/${part.modelId}.png`).default
               }
             />
           );

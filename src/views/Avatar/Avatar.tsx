@@ -46,7 +46,7 @@ const Avatar: React.FC<AvatarProps> = ({ parts }) => {
   return (
     <AvatarSection>
       <Row>
-        <AvatarProfile src={require(`ArtEngine/layers/NotFound.png`).default} />
+        <AvatarProfile src={require(`layers/NotFound.png`).default} />
         <PartsColumn>
           {parts.map((partId, index) => {
             if (index > 3) return;
@@ -54,7 +54,7 @@ const Avatar: React.FC<AvatarProps> = ({ parts }) => {
               return (
                 <PartBox
                   key={partId}
-                  src={require(`ArtEngine/layers/NotFound.png`).default}
+                  src={require(`layers/NotFound.png`).default}
                 />
               );
 
@@ -78,7 +78,7 @@ const Avatar: React.FC<AvatarProps> = ({ parts }) => {
             return (
               <PartBox
                 key={partId}
-                src={require(`ArtEngine/layers/${layer}/${partId}.png`).default}
+                src={require(`layers/${layer}/${partId}.png`).default}
               />
             );
           })}
@@ -91,7 +91,7 @@ const Avatar: React.FC<AvatarProps> = ({ parts }) => {
             return (
               <PartBox
                 key={partId}
-                src={require(`ArtEngine/layers/NotFound.png`).default}
+                src={require(`layers/NotFound.png`).default}
               />
             );
           let layer: string;
@@ -114,7 +114,7 @@ const Avatar: React.FC<AvatarProps> = ({ parts }) => {
           return (
             <PartBox
               key={partId}
-              src={require(`ArtEngine/layers/${layer}/${partId}.png`).default}
+              src={require(`layers/${layer}/${partId}.png`).default}
             />
           );
         })}
