@@ -88,7 +88,7 @@ const Inventory: React.FC<InventoryProps> = ({
               layer = "background";
               break;
             default:
-              return;
+              return null;
           }
           return (
             <InventoryTab
@@ -124,6 +124,7 @@ const Inventory: React.FC<InventoryProps> = ({
           );
           return (
             <ItemBox
+              key={part.id}
               src={
                 require(`layers/${layer}/${part.modelId}.png`).default
               }

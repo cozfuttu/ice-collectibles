@@ -49,7 +49,7 @@ const Avatar: React.FC<AvatarProps> = ({ parts }) => {
         <AvatarProfile src={require(`layers/NotFound.png`).default} />
         <PartsColumn>
           {parts.map((partId, index) => {
-            if (index > 3) return;
+            if (index > 3) return null;
             if (!parts[index])
               return (
                 <PartBox
@@ -73,7 +73,7 @@ const Avatar: React.FC<AvatarProps> = ({ parts }) => {
                 layer = "mouth";
                 break;
               default:
-                return;
+                return null;
             }
             return (
               <PartBox
@@ -86,7 +86,7 @@ const Avatar: React.FC<AvatarProps> = ({ parts }) => {
       </Row>
       <PartsRow>
         {parts.map((partId, index) => {
-          if (index <= 3) return;
+          if (index <= 3) return null;
           if (!parts[index])
             return (
               <PartBox
@@ -109,7 +109,7 @@ const Avatar: React.FC<AvatarProps> = ({ parts }) => {
               layer = "background";
               break;
             default:
-              return;
+              return null;
           }
           return (
             <PartBox

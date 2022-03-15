@@ -9,12 +9,12 @@ const fetchUserPartsData = async (account: string) => {
     {
       address: partsContractAddress,
       name: 'getUserByAddress',
-      params: ['0x2557f50BD8b2c9F82EA331eDf0E8db30F83f6E57']
+      params: [account]
     },
     {
       address: partsContractAddress,
       name: 'returnOwnedNftParts',
-      params: ['0x2557f50BD8b2c9F82EA331eDf0E8db30F83f6E57']
+      params: [account]
     }
   ]
 
@@ -35,19 +35,30 @@ const fetchUserPartsData = async (account: string) => {
         }
       ]
 
-      const [partDataResponse] = await multicall(partsAbi, partDataCall)
+      console.log('fetching tokendata from tokenId:', tokenId)
+
+      let partDataResponse;
+      try {
+        [partDataResponse] = await multicall(partsAbi, partDataCall)
+      }
+
+      catch (e) {
+        console.log('Error occured while fetching: ', tokenId)
+      }
+
+      console.log('partId: ', tokenId, 'partDataResp: ', partDataResponse)
 
       // DATABASEDEN DE VERİ ÇEKİCEKSİN!
 
       return {
-        id: parseInt(partDataResponse.id._hex),
-        typeId: parseInt(partDataResponse.typeId._hex),
-        modelId: parseInt(partDataResponse.modelId._hex),
-        owner: partDataResponse.owner
+        id: parseInt(partDataResponse?.id._hex),
+        typeId: parseInt(partDataResponse?.typeId._hex),
+        modelId: parseInt(partDataResponse?.modelId._hex),
+        owner: partDataResponse?.owner
       }
     })
   )
-  return {partsData, ownedNftCount: parseInt(ownedNftCount._hex)}
+  return { partsData, ownedNftCount: parseInt(ownedNftCount._hex) }
 }
 
 export default fetchUserPartsData

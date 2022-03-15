@@ -12,7 +12,7 @@ const ConnectWalletBtn = styled(Button)`
 const ConnectWalletButton = () => {
   const { account, connect, disconnect } = useContext(WalletContext)
 
-  if (account !== undefined) {
+  if (account) {
     return (
       <ConnectWalletBtn onClick={disconnect} style={{ backgroundColor: 'red' }}>
         {account.substring(0, 5) + '...' + account.substring(39)}

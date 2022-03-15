@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useFetchAllData, useParts } from "state/hooks";
+import React, { useContext, useEffect, useState, Suspense } from "react";
+import { useFetchAllData, useParts, useUser } from "state/hooks";
 import styled from "styled-components";
 import { Avatar } from "views/Avatar";
 import { Inventory } from "views/Inventory";
@@ -30,7 +30,7 @@ function App() {
   const [chosenPartIds, setChosenPartIds] = useState([]); // Burası token id'leri tutucak, model id'leri değil.
   const [chosenPartModelIds, setChosenPartModelIds] = useState([]);
   const { connect } = useContext(WalletContext);
-  const val = useParts();
+  const val = useUser();
 
   const modalIds = [100, 200, 300, 400, 500, 600, 700, 800];
 
@@ -41,7 +41,8 @@ function App() {
   useFetchAllData();
 
   const handleMintNft = async () => {
-    console.log("yeee", val);
+
+    console.log("yee", val);
   };
 
   return (

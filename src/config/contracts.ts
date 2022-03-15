@@ -2,11 +2,15 @@ export const CHAIN_ID = 137
 
 const contracts = {
   mintingContract: {
-    137: '',
+    137: '0xA74ee54946C32253073f50DBAFdc3B1eEC079121',
     80001: ''
   },
   partsContract: {
-    137: '0x1d0982746F734Eb71d9c576c990fB19F473D53e1',
+    137: '0xF979124D7253aC9918EB99dd940ADC214F091a9E',
+    80001: ''
+  },
+  iceContract: {
+    137: '0x772b85908Be5fa6EB3C9560CFa630CD89f1313D8',
     80001: ''
   },
   nativeToken: {
@@ -20,7 +24,7 @@ const contracts = {
   usdc: {
     137: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
     80001: ''
-  }
+  },
 }
 
 export default contracts
