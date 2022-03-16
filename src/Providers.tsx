@@ -5,11 +5,11 @@ import store from 'state'
 const Providers: React.FC = ({ children }) => {
 
   return (
-    <WalletContextProvider>
-      <Provider store={store}>
+    <Provider store={store}>
+      <WalletContextProvider>
         {children}
-      </Provider>
-    </WalletContextProvider>
+      </WalletContextProvider>
+    </Provider>
   )
 }
 

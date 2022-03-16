@@ -1,9 +1,10 @@
-import { Button } from "components";
+import { Button, XIcon } from "components";
 import { layersOrder, format } from "config/avatarLayers";
 import useCompoundNft from "hooks/useCompoundNft";
 import React, { useState } from "react";
 import useNotificationUpdate from 'hooks/useNotificationUpdate'
 import styled from "styled-components";
+import { errorsStatus } from "config/notifications";
 
 const AvatarSection = styled.div`
   width: 50%;
@@ -39,14 +40,16 @@ const PartBox = styled.img`
   border: 4px solid black;
   width: 72px;
   height: 72px;
+  cursor: pointer;
 `;
 
 interface AvatarProps {
   partModelIds: number[]
   partTokenIds: number[]
+  setInventoryTabIndex: any
 }
 
-const Avatar: React.FC<AvatarProps> = ({ partModelIds, partTokenIds }) => {
+const Avatar: React.FC<AvatarProps> = ({ partModelIds, partTokenIds, setInventoryTabIndex }) => {
   // Part array order: background, torso, arms, head, mouth, nose, eyes, hair
   const { onCompound } = useCompoundNft()
   const { onShow } = useNotificationUpdate()
@@ -97,12 +100,8 @@ const Avatar: React.FC<AvatarProps> = ({ partModelIds, partTokenIds }) => {
       //      uploadToIpfs(tokenId)
     }
     catch (e: any) {
-      const details = {
-        message: e.message,
-        title: 'Error',
-        status: e.code,
-      }
-      onShow(details)
+      if (e.code === 4001) onShow(errorsStatus.TRANSACTION_REJECTED)
+      else onShow(errorsStatus.TRANSACTION_REVERTED)
     }
     finally {
       setDisabled(false)
@@ -115,20 +114,26 @@ const Avatar: React.FC<AvatarProps> = ({ partModelIds, partTokenIds }) => {
         <PartsColumn>
           {partModelIds.map((partId, index) => {
             if (index > 3) return null;
-            if (partId < 100)
+            if (partId < 100) {
+              const layer = layersOrder[index].name
               return (
                 <PartBox
                   key={partId}
-                  src={`layers/NotFound.png`}
+                  src={`layers/${layer}/default.png`}
+                  onClick={() => setInventoryTabIndex((index + 1) * 100)}
                 />
-              );
+              )
+            }
 
             const layer = layersOrder[index].name;
             return (
-              <PartBox
-                key={partId}
-                src={`layers/${layer}/${partId}.png`}
-              />
+              <>
+                <PartBox
+                  key={partId}
+                  src={`layers/${layer}/${partId}.png`}
+                />
+                <XIcon />
+              </>
             );
           })}
         </PartsColumn>
@@ -136,20 +141,26 @@ const Avatar: React.FC<AvatarProps> = ({ partModelIds, partTokenIds }) => {
         <PartsColumn>
           {partModelIds.map((partId, index) => {
             if (index <= 3) return null;
-            if (partId < 100)
+            if (partId < 100) {
+              const layer = layersOrder[index].name
               return (
                 <PartBox
                   key={partId}
-                  src={`layers/NotFound.png`}
+                  src={`layers/${layer}/default.png`}
+                  onClick={() => setInventoryTabIndex((index + 1) * 100)}
                 />
-              );
+              )
+            };
 
             const layer = layersOrder[index].name;
             return (
-              <PartBox
-                key={partId}
-                src={`layers/${layer}/${partId}.png`}
-              />
+              <>
+                <PartBox
+                  key={partId}
+                  src={`layers/${layer}/${partId}.png`}
+                />
+                <XIcon />
+              </>
             );
           })}
         </PartsColumn>

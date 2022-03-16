@@ -27,6 +27,7 @@ export interface NotificationState {
   status: string
   title: string
   message: string
+  image?: string
 }
 
 export interface UiState {

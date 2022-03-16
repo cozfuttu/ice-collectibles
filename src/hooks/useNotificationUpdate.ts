@@ -1,3 +1,4 @@
+import { errorsConfig, errorsStatus, successStatus } from "config/notifications"
 import { useCallback } from "react"
 import { useDispatch } from "react-redux"
 import { NotificationState } from "state/types"
@@ -10,8 +11,9 @@ const useNotificationUpdate = () => {
     dispatch(closeNotification())
   }, [dispatch])
 
-  const handleShow = useCallback((notification: NotificationState) => {
-    dispatch(showNotification(notification))
+  const handleShow = useCallback((notificationStatus: errorsStatus | successStatus) => {
+    const error = errorsConfig.find((error) => error.status === notificationStatus)!
+    dispatch(showNotification(error))
   }, [dispatch])
 
   return { onClose: handleClose, onShow: handleShow }

@@ -26,12 +26,7 @@ const ConnectButtonContainer = styled.div`
   justify-content: end;
 `;
 
-const ModalContainer = styled.div`
-  width: 75%;
-  position: fixed;
-  left: 50%;
-  margin-left: -37.5%;
-`
+const InventoryTabIndexes = [100, 200, 300, 400, 500, 600, 700, 800];
 
 function App() {
   const val = useUser();
@@ -40,6 +35,7 @@ function App() {
 
   const [chosenPartIds, setChosenPartIds] = useState([0, 0, 0, 0, 0, 0, 0, 0]); // Burası token id'leri tutucak, model id'leri değil.
   const [chosenPartModelIds, setChosenPartModelIds] = useState([0, 1, 2, 3, 4, 5, 6, 7]);
+  const [tabIndex, setTabIndex] = useState(100)
   const { connect } = useContext(WalletContext);
 
   useEffect(() => {
@@ -63,19 +59,17 @@ function App() {
       </ConnectButtonContainer>
       {
         notification &&
-        <ModalContainer>
-          <Modal closeFunc={onClose} />
-        </ModalContainer>
+        <Modal closeFunc={onClose} />
       }
-      <Avatar partModelIds={chosenPartModelIds} partTokenIds={chosenPartIds} />
+      <Avatar partModelIds={chosenPartModelIds} partTokenIds={chosenPartIds} setInventoryTabIndex={setTabIndex} />
       <Inventory
         setChosenModalIds={setChosenPartModelIds}
         setChosenPartIds={setChosenPartIds}
         chosenTokenIds={chosenPartIds}
+        tabIndex={tabIndex}
+        setTabIndex={setTabIndex}
       />
-      {/* <Modal show={showModal} closeFunc={() => setShowModal(false)} /> */}
       {<Button onClick={handleMintNft}>Log info</Button>}
-      {/* <Button onClick={async () => {await mintNft()}}>CREATE</Button> */}
     </Page>
   );
 }

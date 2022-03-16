@@ -1,4 +1,6 @@
 import { CHAIN_ID } from "config/contracts"
+import { errorsConfig, errorsStatus } from "config/notifications"
+import useNotificationUpdate from "hooks/useNotificationUpdate"
 import { useCallback } from "react"
 import { createContext, useEffect, useState } from "react"
 
@@ -19,26 +21,28 @@ const WalletContextProvider: React.FC = ({ children }) => {
   const { ethereum } = window
   const [account, setAccount] = useState('')
   const [networkId, setNetworkId] = useState(null)
+  const { onShow } = useNotificationUpdate()
 
   const connectHandler = useCallback(async () => {
     if (!ethereum) {
-      alert("You need to install Metamask in order to use this dApp.")
+      onShow(errorsStatus.NO_WALLET_DETECTED)
+      return
     }
 
     try {
       const network = await ethereum.request({ method: 'net_version' })
       if (parseInt(network) !== CHAIN_ID) {
-        alert("You need to change your network to Polygon.")
+        onShow(errorsStatus.WRONG_NETWORK)
         return
       }
       const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
       setAccount(accounts[0])
       setNetworkId(network)
-    } catch (err) {
-      alert("An error happened. Ignore this if you rejected the connection request.")
-      console.log('An error happened while connecting wallet: ', err)
+    } catch (err: any) {
+      if (err.code === 4001) onShow(errorsStatus.TRANSACTION_REJECTED)
+      else onShow(errorsStatus.TRANSACTION_REJECTED)
     }
-  }, [ethereum])
+  }, [ethereum, onShow])
 
   const disconnectHandler = () => {
     setAccount('')
@@ -54,7 +58,7 @@ const WalletContextProvider: React.FC = ({ children }) => {
       else {
         setAccount('')
         setNetworkId(null)
-        window.alert("You need to change your network to Polygon. Disconnecting...")
+        onShow(errorsStatus.CHAIN_CHANGED)
       }
     })
   }, [connectHandler, ethereum])

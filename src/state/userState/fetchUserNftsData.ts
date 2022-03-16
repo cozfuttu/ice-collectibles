@@ -31,12 +31,18 @@ const fetchUserNftsData = async (account: string) => {
           address: mintingContractAddress,
           name: 'getCompleteNftById',
           params: [tokenId]
-        }
+        },
+        {
+          address: mintingContractAddress,
+          name: 'tokenURI',
+          params: [tokenId]
+        },
       ]
 
-      const [nftDataResponse] = await multicall(mintingAbi, nftDataCall)
+      const [nftDataResponse, tokenUriResponse] = await multicall(mintingAbi, nftDataCall)
 
       console.log('fetched nfts: ', nftDataResponse)
+      console.log('token uris: ', tokenUriResponse)
 
       // DATABASEDEN DE VERİ ÇEKİCEKSİN!
 

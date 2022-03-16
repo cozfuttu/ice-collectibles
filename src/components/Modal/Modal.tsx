@@ -3,21 +3,27 @@ import styled from 'styled-components'
 import { Button } from '../Button'
 
 const ModalDiv = styled.div<{ isError: boolean }>`
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: ${({ isError }) => isError ? "#f1170855" : "#9ef33e55"};
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`
+
+const ModalContent = styled.div<{ isError: boolean }>`
+  position: relative;
+  max-width: 640px;
+  padding: 24px;
+  height: fit-content;
   background-color: ${({ isError }) => isError ? "#f11708" : "#9ef33e"};
-  margin: auto;
   border: 2px solid ${({ isError }) => isError ? "#8a0a01" : "#158601"};
   transition: all 2s ease-in;
   text-align: center;
-  width: 640px;
-`
-
-const ModalContent = styled.div`
-  align-items: center;
 `
 
 const ModalHeader = styled.div`
@@ -42,11 +48,11 @@ interface ModalProps {
 
 const Modal: React.FC<ModalProps> = ({ closeFunc }) => {
   const notification = useNotification()
-  const isError = parseInt(notification!.status) > 0
+  const isError = notification!.title.includes('Error')
   //  console.log('notification: ', notification)
   return (
     <ModalDiv isError={isError} onClick={closeFunc}>
-      <ModalContent onClick={e => e.stopPropagation()}>
+      <ModalContent isError={isError} onClick={e => e.stopPropagation()}>
         <ModalHeader>
           {notification?.title}: {notification?.status}
         </ModalHeader>

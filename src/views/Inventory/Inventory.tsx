@@ -1,5 +1,5 @@
 import { layersOrder } from "config/avatarLayers";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParts } from "state/hooks";
 import styled from "styled-components";
 
@@ -36,6 +36,8 @@ interface InventoryProps {
   setChosenModalIds: any
   setChosenPartIds: any
   chosenTokenIds: number[]
+  tabIndex: number
+  setTabIndex: any
 }
 
 const InventoryTabIndexes = [100, 200, 300, 400, 500, 600, 700, 800];
@@ -44,10 +46,11 @@ const Inventory: React.FC<InventoryProps> = ({
   setChosenModalIds,
   setChosenPartIds,
   chosenTokenIds,
+  tabIndex,
+  setTabIndex
 }) => {
   const parts = useParts(); // The parts user has in their wallet.
 
-  const [tabIndex, setTabIndex] = useState(100);
   const [shownParts, setShownParts] = useState(
     parts.filter((part) => part.modelId < tabIndex)
   );
@@ -60,6 +63,10 @@ const Inventory: React.FC<InventoryProps> = ({
       )
     );
   };
+
+  useEffect(() => {
+    handleTabChange(tabIndex)
+  }, [tabIndex])
 
   const handleItemSelect = (modelId: number, tokenId: number) => {
     const isSelected = chosenTokenIds.includes(tokenId)
@@ -80,15 +87,15 @@ const Inventory: React.FC<InventoryProps> = ({
   return (
     <InventorySection>
       <InventoryTabs>
-        {InventoryTabIndexes.map((index) => {
-          const layer = layersOrder[(index / 100) - 1].name
+        {InventoryTabIndexes.map((indexNo) => {
+          const layer = layersOrder[(indexNo / 100) - 1].name
           return (
             <InventoryTab
-              key={index}
+              key={indexNo}
               src={
-                `layers/${layer}/${index}.png`
+                `layers/${layer}/${indexNo}.png`
               }
-              onClick={() => handleTabChange(index)}
+              onClick={() => setTabIndex(indexNo)}
             />
           );
         })}

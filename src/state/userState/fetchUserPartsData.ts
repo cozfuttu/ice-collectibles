@@ -35,8 +35,6 @@ const fetchUserPartsData = async (account: string) => {
         }
       ]
 
-      console.log('fetching tokendata from tokenId:', tokenId)
-
       let partDataResponse;
       try {
         [partDataResponse] = await multicall(partsAbi, partDataCall)
@@ -45,8 +43,6 @@ const fetchUserPartsData = async (account: string) => {
       catch (e) {
         console.log('Error occured while fetching part: ', tokenId)
       }
-
-      console.log('partId: ', tokenId, 'partDataResp: ', partDataResponse)
 
       // DATABASEDEN DE VERİ ÇEKİCEKSİN!
 
