@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState, Suspense } from "react";
-import { useFetchAllData, useParts, useUser } from "state/hooks";
+import { useDispatch } from "react-redux";
+import { useFetchAllData, useNotification, useUser } from "state/hooks";
+import { closeNotification } from "state/uiState";
+import useNotificationUpdate from 'hooks/useNotificationUpdate'
 import styled from "styled-components";
 import { Avatar } from "views/Avatar";
 import { Inventory } from "views/Inventory";
-import { Button } from "./components";
+import { Button, Modal } from "./components";
 import { ConnectWalletButton } from "./components/ConnectWalletButton";
-import Modal from "./components/Modal/Modal";
 import { WalletContext } from "./context/WalletContext";
 
 const Page = styled.div`
@@ -15,6 +17,7 @@ const Page = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
 `;
 
 const ConnectButtonContainer = styled.div`
@@ -25,24 +28,34 @@ const ConnectButtonContainer = styled.div`
   justify-content: end;
 `;
 
-function App() {
-  const [showModal, setShowModal] = useState(false);
-  const [chosenPartIds, setChosenPartIds] = useState([]); // Burası token id'leri tutucak, model id'leri değil.
-  const [chosenPartModelIds, setChosenPartModelIds] = useState([]);
-  const { connect } = useContext(WalletContext);
-  const val = useUser();
+const ModalContainer = styled.div`
+  width: 75%;
+  position: fixed;
+  left: 50%;
+  margin-left: -37.5%;
+`
 
-  const modalIds = [100, 200, 300, 400, 500, 600, 700, 800];
+function App() {
+  const val = useUser();
+  const notification = useNotification()
+  const { onClose } = useNotificationUpdate()
+  const dispatch = useDispatch()
+
+  const [chosenPartIds, setChosenPartIds] = useState([0, 0, 0, 0, 0, 0, 0, 0]); // Burası token id'leri tutucak, model id'leri değil.
+  const [chosenPartModelIds, setChosenPartModelIds] = useState([0, 1, 2, 3, 4, 5, 6, 7]);
+  const { connect } = useContext(WalletContext);
 
   useEffect(() => {
     connect();
   }, [connect]);
 
   useFetchAllData();
+  console.log('chosenModelIds: ', chosenPartModelIds)
+  console.log('chosenPartIds: ', chosenPartIds)
 
   const handleMintNft = async () => {
 
-    console.log("yee", val);
+    console.log("ur info", val);
   };
 
   return (
@@ -50,13 +63,20 @@ function App() {
       <ConnectButtonContainer>
         <ConnectWalletButton />
       </ConnectButtonContainer>
-      <Avatar parts={modalIds} />
+      {
+        notification &&
+        <ModalContainer>
+          <Modal closeFunc={onClose} />
+        </ModalContainer>
+      }
+      <Avatar partModelIds={chosenPartModelIds} partTokenIds={chosenPartIds} />
       <Inventory
         setChosenModalIds={setChosenPartModelIds}
         setChosenPartIds={setChosenPartIds}
+        chosenTokenIds={chosenPartIds}
       />
       {/* <Modal show={showModal} closeFunc={() => setShowModal(false)} /> */}
-      {<Button onClick={handleMintNft}>Toggle Modal</Button>}
+      {<Button onClick={handleMintNft}>Log info</Button>}
       {/* <Button onClick={async () => {await mintNft()}}>CREATE</Button> */}
     </Page>
   );

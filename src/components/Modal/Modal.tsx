@@ -1,16 +1,20 @@
+import { useNotification } from 'state/hooks'
+import { closeNotification } from 'state/uiState'
 import styled from 'styled-components'
 import { Button } from '../Button'
 
-const ModalDiv = styled.div`
-  position: fixed;
+const ModalDiv = styled.div<{ isError: boolean }>`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #9ef33e;
+  background-color: ${({ isError }) => isError ? "#f11708" : "#9ef33e"};
   margin: auto;
-  border: 2px solid #158601;
+  border: 2px solid ${({ isError }) => isError ? "#8a0a01" : "#158601"};
   transition: all 2s ease-in;
+  text-align: center;
+  width: 640px;
 `
 
 const ModalContent = styled.div`
@@ -25,6 +29,7 @@ const ModalBody = styled.div`
   border-top: 1px solid #000000;
   border-bottom: 1px solid #000000;
   flex-direction: column;
+  word-wrap: break-word;
 `
 
 const ModalFooter = styled.div`
@@ -33,23 +38,24 @@ const ModalFooter = styled.div`
 
 
 interface ModalProps {
-  show?: boolean
   closeFunc: () => void
 }
 
-const Modal: React.FC<ModalProps> = ({ show, closeFunc }) => {
-  if (!show) return null
+const Modal: React.FC<ModalProps> = ({ closeFunc }) => {
+  const notification = useNotification()
+  const isError = parseInt(notification!.status) > 0
+  //  console.log('notification: ', notification)
   return (
-    <ModalDiv onClick={() => closeFunc()}>
+    <ModalDiv isError={isError} onClick={closeFunc}>
       <ModalContent onClick={e => e.stopPropagation()}>
         <ModalHeader>
-          Modal Title
+          {notification?.title}: {notification?.status}
         </ModalHeader>
         <ModalBody>
-          Modal Body
+          {notification?.message}
         </ModalBody>
         <ModalFooter>
-          <Button onClick={() => closeFunc()}>Close</Button>
+          <Button onClick={closeFunc} style={{ backgroundColor: isError ? '#7e0800' : "#4aca00" }}>Close</Button>
         </ModalFooter>
       </ModalContent>
     </ModalDiv>

@@ -43,7 +43,7 @@ const fetchUserPartsData = async (account: string) => {
       }
 
       catch (e) {
-        console.log('Error occured while fetching: ', tokenId)
+        console.log('Error occured while fetching part: ', tokenId)
       }
 
       console.log('partId: ', tokenId, 'partDataResp: ', partDataResponse)
