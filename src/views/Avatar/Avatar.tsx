@@ -17,7 +17,6 @@ const AvatarProfile = styled.canvas`
   border: 8px solid black;
   width: 470px;
   height: 600px;
-  image-resolution: 19;
 `;
 
 const Row = styled.div`
@@ -57,9 +56,9 @@ const Avatar: React.FC<AvatarProps> = ({ partModelIds, partTokenIds }) => {
   const loadImage = (path: string) => {
     return new Promise((resolve, reject) => {
       const img = new Image()
+      img.src = path
       img.onload = () => resolve(img)
       img.onerror = () => reject(new Error(`${path} load failed`))
-      img.src = path
     })
   }
 
@@ -111,7 +110,6 @@ const Avatar: React.FC<AvatarProps> = ({ partModelIds, partTokenIds }) => {
   return (
     <AvatarSection>
       <Row>
-        <AvatarProfile id='avatarprofile' />
         <PartsColumn>
           {partModelIds.map((partId, index) => {
             if (index > 3) return null;
@@ -119,7 +117,7 @@ const Avatar: React.FC<AvatarProps> = ({ partModelIds, partTokenIds }) => {
               return (
                 <PartBox
                   key={partId}
-                  src={require(`layers/NotFound.png`).default}
+                  src={`layers/NotFound.png`}
                 />
               );
 
@@ -143,47 +141,48 @@ const Avatar: React.FC<AvatarProps> = ({ partModelIds, partTokenIds }) => {
             return (
               <PartBox
                 key={partId}
-                src={require(`layers/${layer}/${partId}.png`).default}
+                src={`layers/${layer}/${partId}.png`}
+              />
+            );
+          })}
+        </PartsColumn>
+        <AvatarProfile id='avatarprofile' />
+        <PartsColumn>
+          {partModelIds.map((partId, index) => {
+            if (index <= 3) return null;
+            if (partId < 100)
+              return (
+                <PartBox
+                  key={partId}
+                  src={`layers/NotFound.png`}
+                />
+              );
+            let layer: string;
+            switch (index) {
+              case 4:
+                layer = "mouth";
+                break;
+              case 5:
+                layer = "nose";
+                break;
+              case 6:
+                layer = "eyes";
+                break;
+              case 7:
+                layer = "hair";
+                break;
+              default:
+                return null;
+            }
+            return (
+              <PartBox
+                key={partId}
+                src={`layers/${layer}/${partId}.png`}
               />
             );
           })}
         </PartsColumn>
       </Row>
-      <PartsRow>
-        {partModelIds.map((partId, index) => {
-          if (index <= 3) return null;
-          if (partId < 100)
-            return (
-              <PartBox
-                key={partId}
-                src={require(`layers/NotFound.png`).default}
-              />
-            );
-          let layer: string;
-          switch (index) {
-            case 4:
-              layer = "mouth";
-              break;
-            case 5:
-              layer = "nose";
-              break;
-            case 6:
-              layer = "eyes";
-              break;
-            case 7:
-              layer = "hair";
-              break;
-            default:
-              return null;
-          }
-          return (
-            <PartBox
-              key={partId}
-              src={require(`layers/${layer}/${partId}.png`).default}
-            />
-          );
-        })}
-      </PartsRow>
       <Button
         disabled={(partModelIds.find((modelId) => modelId < layersOrder.length) !== undefined) || disabled}
         style={{ marginTop: '16px' }}

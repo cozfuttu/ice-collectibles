@@ -113,7 +113,7 @@ const Inventory: React.FC<InventoryProps> = ({
             <InventoryTab
               key={index}
               src={
-                require(`layers/${layer}/${index}.png`).default
+                `layers/${layer}/${index}.png`
               }
               onClick={() => handleTabChange(index)}
             />
@@ -142,7 +142,7 @@ const Inventory: React.FC<InventoryProps> = ({
             <ItemBox
               key={part.id}
               src={
-                require(`layers/${layer}/${part.modelId}.png`).default
+                `layers/${layer}/${part.modelId}.png`
               }
               onClick={() => handleItemSelect(part.modelId, part.id)}
               style={{ border: isSelected ? '8px solid lightgreen' : '4px solid green' }}
