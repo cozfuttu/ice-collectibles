@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const StyledButton = styled.button<{ disabled?: boolean }>`
   padding: 12px;
-  cursor: ${({ disabled }) => !disabled && "pointer"};
+  cursor: ${({ disabled }) => !disabled ? "pointer" : "no-drop"};
   background-color: ${({ disabled }) => !disabled ? "#4aca00" : "#ffffff"};
   color: ${({ disabled }) => !disabled ? "#ffffff" : "#4aca00"};
   font-weight: bold;
