@@ -10,6 +10,10 @@ const StyledButton = styled.button<{ disabled?: boolean }>`
   border-radius: 8px;
   transition: all 100ms linear;
   user-select: none;
+
+  &:hover {
+    transform: scale(1.2);
+  }
 `
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
