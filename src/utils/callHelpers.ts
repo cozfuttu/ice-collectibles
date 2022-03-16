@@ -1,5 +1,3 @@
-import BigNumber from "bignumber.js";
-import { Contract } from 'web3-eth-contract'
 import { ethers } from 'ethers'
 
 export const approve = async (mainContract, spenderContract, account: string) => {

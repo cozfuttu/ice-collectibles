@@ -1,7 +1,5 @@
-import React, { useContext, useEffect, useState, Suspense } from "react";
-import { useDispatch } from "react-redux";
+import React, { useContext, useEffect, useState } from "react";
 import { useFetchAllData, useNotification, useUser } from "state/hooks";
-import { closeNotification } from "state/uiState";
 import useNotificationUpdate from 'hooks/useNotificationUpdate'
 import styled from "styled-components";
 import { Avatar } from "views/Avatar";
@@ -39,7 +37,6 @@ function App() {
   const val = useUser();
   const notification = useNotification()
   const { onClose } = useNotificationUpdate()
-  const dispatch = useDispatch()
 
   const [chosenPartIds, setChosenPartIds] = useState([0, 0, 0, 0, 0, 0, 0, 0]); // Burası token id'leri tutucak, model id'leri değil.
   const [chosenPartModelIds, setChosenPartModelIds] = useState([0, 1, 2, 3, 4, 5, 6, 7]);
@@ -60,6 +57,7 @@ function App() {
 
   return (
     <Page>
+      {/* DON'T FORGET TO IMPLEMENT SUSPENSE! */}
       <ConnectButtonContainer>
         <ConnectWalletButton />
       </ConnectButtonContainer>

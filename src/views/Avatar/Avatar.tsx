@@ -29,11 +29,11 @@ const PartsColumn = styled.div`
   flex-direction: column;
 `;
 
-const PartsRow = styled.div`
+/* const PartsRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-`;
+`; */
 
 const PartBox = styled.img`
   border: 4px solid black;
@@ -93,6 +93,8 @@ const Avatar: React.FC<AvatarProps> = ({ partModelIds, partTokenIds }) => {
     setDisabled(true)
     try {
       const tokenId = await onCompound(partTokenIds)
+      console.log('minted nft token id: ', tokenId)
+      //      uploadToIpfs(tokenId)
     }
     catch (e: any) {
       const details = {

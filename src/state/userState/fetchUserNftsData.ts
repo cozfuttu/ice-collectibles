@@ -1,5 +1,3 @@
-import BigNumber from "bignumber.js"
-import { NftData } from "state/types"
 import { getMintingContractAddress } from "utils/addressHelpers"
 import multicall from "utils/multicall"
 import mintingAbi from 'config/abi/CompleteNfts.json'
@@ -12,15 +10,22 @@ const fetchUserNftsData = async (account: string) => {
       address: mintingContractAddress,
       name: 'getUserByAddress',
       params: [account]
+    },
+    {
+      address: mintingContractAddress,
+      name: 'returnOwnedCompleteNfts',
+      params: [account]
     }
   ]
 
-  const [userInfo] = await multicall(mintingAbi, userCall)
+  const [, userInfo2] = await multicall(mintingAbi, userCall)
 
-  const { ownedCompleteNfts }: { ownedCompleteNfts: number[] } = userInfo
+  const ownedNftIds = userInfo2[0]
+
+  const ownedNftIdsNumber: number[] = ownedNftIds.map((tokenId) => parseInt(tokenId._hex))
 
   const nftsData = await Promise.all(
-    ownedCompleteNfts.map(async (tokenId) => {
+    ownedNftIdsNumber.map(async (tokenId) => {
       const nftDataCall = [
         {
           address: mintingContractAddress,
@@ -29,7 +34,9 @@ const fetchUserNftsData = async (account: string) => {
         }
       ]
 
-      const [nftDataResponse]: [NftData] = await multicall(mintingAbi, nftDataCall)
+      const [nftDataResponse] = await multicall(mintingAbi, nftDataCall)
+
+      console.log('fetched nfts: ', nftDataResponse)
 
       // DATABASEDEN DE VERİ ÇEKİCEKSİN!
 
@@ -55,7 +62,7 @@ const fetchUserNftsData = async (account: string) => {
           ) */
 
       return {
-        id: new BigNumber(nftDataResponse.id).toNumber(),
+        id: parseInt(nftDataResponse?.id._hex),
         parts: nftDataResponse.parts,
         owner: nftDataResponse.owner
       }

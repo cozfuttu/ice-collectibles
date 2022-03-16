@@ -15,7 +15,7 @@ const useCompoundNft = () => {
     dispatch(fetchUserPartsDataAsync(account))
     dispatch(fetchUserNftsDataAsync(account))
     return txHash
-  }, [account, mintingContract])
+  }, [account, mintingContract, dispatch])
 
   return { onCompound: handleCompound }
 }

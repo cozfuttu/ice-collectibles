@@ -1,5 +1,4 @@
 import { useNotification } from 'state/hooks'
-import { closeNotification } from 'state/uiState'
 import styled from 'styled-components'
 import { Button } from '../Button'
 
