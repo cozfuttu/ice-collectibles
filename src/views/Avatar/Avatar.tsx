@@ -123,23 +123,7 @@ const Avatar: React.FC<AvatarProps> = ({ partModelIds, partTokenIds }) => {
                 />
               );
 
-            let layer: string;
-            switch (index) {
-              case 0:
-                layer = "background";
-                break;
-              case 1:
-                layer = "torso";
-                break;
-              case 2:
-                layer = "arms";
-                break;
-              case 3:
-                layer = "head";
-                break;
-              default:
-                return null;
-            }
+            const layer = layersOrder[index].name;
             return (
               <PartBox
                 key={partId}
@@ -159,23 +143,8 @@ const Avatar: React.FC<AvatarProps> = ({ partModelIds, partTokenIds }) => {
                   src={`layers/NotFound.png`}
                 />
               );
-            let layer: string;
-            switch (index) {
-              case 4:
-                layer = "mouth";
-                break;
-              case 5:
-                layer = "nose";
-                break;
-              case 6:
-                layer = "eyes";
-                break;
-              case 7:
-                layer = "hair";
-                break;
-              default:
-                return null;
-            }
+
+            const layer = layersOrder[index].name;
             return (
               <PartBox
                 key={partId}

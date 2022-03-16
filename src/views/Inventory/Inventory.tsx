@@ -1,3 +1,4 @@
+import { layersOrder } from "config/avatarLayers";
 import React, { useState } from "react";
 import { useParts } from "state/hooks";
 import styled from "styled-components";
@@ -80,35 +81,7 @@ const Inventory: React.FC<InventoryProps> = ({
     <InventorySection>
       <InventoryTabs>
         {InventoryTabIndexes.map((index) => {
-          let layer: string;
-          switch (index) {
-            case 100:
-              layer = "background";
-              break;
-            case 200:
-              layer = "torso";
-              break;
-            case 300:
-              layer = "arms";
-              break;
-            case 400:
-              layer = "head";
-              break;
-            case 500:
-              layer = "mouth";
-              break;
-            case 600:
-              layer = "nose";
-              break;
-            case 700:
-              layer = "eyes";
-              break;
-            case 800:
-              layer = "hair";
-              break;
-            default:
-              return null;
-          }
+          const layer = layersOrder[(index / 100) - 1].name
           return (
             <InventoryTab
               key={index}
@@ -128,15 +101,7 @@ const Inventory: React.FC<InventoryProps> = ({
           )
         }) */}
         {shownParts.map((part) => {
-          let layer: string = "";
-          if (part.modelId < 200) layer = "background";
-          else if (part.modelId < 300) layer = "torso";
-          else if (part.modelId < 400) layer = "arms";
-          else if (part.modelId < 500) layer = "head";
-          else if (part.modelId < 600) layer = "mouth";
-          else if (part.modelId < 700) layer = "nose";
-          else if (part.modelId < 800) layer = "eyes";
-          else if (part.modelId < 900) layer = "hair";
+          const layer = layersOrder[Math.floor(part.modelId / 100) - 1].name
           const isSelected = chosenTokenIds.includes(part.id)
           return (
             <ItemBox
